@@ -1,6 +1,5 @@
 package ru.top.academy;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -8,11 +7,12 @@ import java.util.Arrays;
  */
 public class CreditCardValidator {
     private static String stringNumberCreditCard;
-    private static String[] numberCreditCard;
+    private static String[] stringArrayNumberCreditCard;
 
     /**
-     * Метод делает проверку длины карты
-     * @param stringNumberCreditCard - номер карты
+     * Делает проверку длины карты
+     *
+     * @param stringNumberCreditCard номер карты
      * @return Возвращает результат проверки длины номера карты
      */
     private static boolean isValidLength(String stringNumberCreditCard) {
@@ -20,10 +20,9 @@ public class CreditCardValidator {
     }
 
     /**
-     * Метод реализует алгоритм Луна
-     * reverseNumberCreditCard() - переворачивает номер
-     * getArray
-     * @return
+     * Реализует алгоритм Луна
+     *
+     * @return возвращает результат проверки
      */
     private static boolean algorithmLuhn() {
 
@@ -36,17 +35,37 @@ public class CreditCardValidator {
 
     }
 
-    private static boolean isExactDivision(int sum) {
-        return sum % 10 == 0;
+    /**
+     * Проверяет на кратность 10
+     *
+     * @param number на вход принимает число для проверки
+     * @return возвращает результат
+     */
+    private static boolean isExactDivision(int number) {
+        return number % 10 == 0;
     }
 
+    /**
+     * Рекурсивный метод для получения суммы чисел из массива
+     *
+     * @param numCard массив чисел
+     * @param i       индекс последнего числа в массиве
+     * @return возвращает сумму чисел
+     */
     private static int getSum(int[] numCard, int i) {
         return (i == 0) ? numCard[i] : (numCard[i] + getSum(numCard, i - 1));
     }
 
+    /**
+     * Умножает каждое второе число на 2, если после умножения число больше 9,
+     * то вызывает метод sumDigits() и присваивает результат элементу массива numCard
+     *
+     * @param numCard массив чисел
+     * @return возвращает обновленный массив чисел
+     */
     private static int[] multiplicationByTwo(int[] numCard) {
 
-        for (int i = 0; i < numberCreditCard.length; i = i + 2) {
+        for (int i = 0; i < stringArrayNumberCreditCard.length; i = i + 2) {
             numCard[i] = numCard[i] * 2;
             if (numCard[i] > 9) {
                 numCard[i] = sumDigits(numCard[i]);
@@ -57,10 +76,21 @@ public class CreditCardValidator {
 
     }
 
+    /**
+     * Преобразует массив строк в массив чисел
+     *
+     * @return возвращает массив чисел
+     */
     private static int[] getArray() {
-        return Arrays.stream(numberCreditCard).mapToInt(Integer::parseInt).toArray();
+        return Arrays.stream(stringArrayNumberCreditCard).mapToInt(Integer::parseInt).toArray();
     }
 
+    /**
+     * Складывает цифры из аргумента между собой
+     *
+     * @param number число
+     * @return возвращает результат суммы цифр
+     */
     private static int sumDigits(int number) {
 
         int sum = 0;
@@ -74,33 +104,38 @@ public class CreditCardValidator {
 
     }
 
+    /**
+     * Переворачивает строку и записывает в массив строк stringArrayNumberCreditCard разделяя посимвольно
+     */
     private static void reverseNumberCreditCard() {
 
-        String reversNumber = new StringBuilder(stringNumberCreditCard).reverse().toString();
-        numberCreditCard = reversNumber.split("");
-
-    }
-
-    /**
-     * Метод принимает на вход строку, удаляет из нее все символы, которые не являются числом,
-     * проверяет входные данные и при положительном результате присваивает строку глобальной переменной класса
-     *
-     * @param stringNumberCreditCard - номер карты
-     */
-    public void setStringNumberCreditCard(String stringNumberCreditCard) {
-
-        stringNumberCreditCard = stringNumberCreditCard.replaceAll("[^0-9]", "");
-
-        if (isValidLength(stringNumberCreditCard)) {
-            this.stringNumberCreditCard = stringNumberCreditCard;
-        } else {
-            System.out.println("Неверная длина номера");
+        try {
+            String reversNumber = new StringBuilder(stringNumberCreditCard).reverse().toString();
+            stringArrayNumberCreditCard = reversNumber.split("");
+        } catch (NullPointerException ex) {
+            throw new NullPointerException("Пустая строка");
         }
 
     }
 
     /**
-     * Метод вызывает алгоритм Луна
+     * Метод принимает на вход строку, удаляет из нее все символы, которые не являются числом,
+     * проверяет очищенный аргумент на длину и при положительном результате присваивает строку
+     * глобальной переменной класса
+     *
+     * @param stringNumberCreditCard номер карты
+     */
+    public void setStringNumberCreditCard(String stringNumberCreditCard) {
+
+        stringNumberCreditCard = stringNumberCreditCard.replaceAll("[^0-9]", "");
+        if (isValidLength(stringNumberCreditCard)) {
+            this.stringNumberCreditCard = stringNumberCreditCard;
+        }
+
+    }
+
+    /**
+     * Метод позволяет вызвать извне алгоритм Луна
      *
      * @return возвращает результат проверки номера карты
      */
