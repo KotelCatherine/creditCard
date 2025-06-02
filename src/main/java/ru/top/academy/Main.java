@@ -16,7 +16,6 @@ public class Main {
     public static void main(String[] args) {
 
         String stringNumberCard = "4532 7587 9245 1259";
-
         CreditCardValidator creditCardValidator = new CreditCardValidator();
         creditCardValidator.setStringNumberCreditCard(stringNumberCard);
         System.out.println(creditCardValidator.isValidCreditCardNumber());

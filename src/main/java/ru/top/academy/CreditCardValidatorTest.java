@@ -17,9 +17,11 @@ public class CreditCardValidatorTest {
      */
     @Test
     void testValidCardNumber() {
+
         CreditCardValidator creditCardValidator = new CreditCardValidator();
         creditCardValidator.setStringNumberCreditCard("00Q00_000M0_00c00_00o00.");
         assertTrue(creditCardValidator.isValidCreditCardNumber());
+
     }
 
     /**
@@ -27,9 +29,11 @@ public class CreditCardValidatorTest {
      */
     @Test
     void testNotValidCardNumber() {
+
         CreditCardValidator creditCardValidator = new CreditCardValidator();
         creditCardValidator.setStringNumberCreditCard("1111 1111 1111 1111");
         assertFalse(creditCardValidator.isValidCreditCardNumber());
+
     }
 
     /**
@@ -37,9 +41,11 @@ public class CreditCardValidatorTest {
      */
     @Test
     void testNPE() {
+
         CreditCardValidator creditCardValidator = new CreditCardValidator();
         creditCardValidator.setStringNumberCreditCard("");
         assertThrows(NullPointerException.class, creditCardValidator::isValidCreditCardNumber);
+
     }
 
 }
